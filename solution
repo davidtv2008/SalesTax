@@ -1,0 +1,5 @@
+#compile app
+javac *.java
+
+#execute solution and pass txt file names as arguments. these .txt files should reside in same directory as App solution
+java App *.txt
