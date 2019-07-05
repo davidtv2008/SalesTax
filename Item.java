@@ -83,7 +83,7 @@ class Item {
         }
 
         //calculate the imported tax amount
-        imported_tax_amount = (cost * imported_tax) / 100;
+        imported_tax_amount = ((qty * cost) * imported_tax) / 100;
 
         //round to nearest 0.05
         imported_tax_amount = Math.ceil(imported_tax_amount * 20.00) / 20.00;
@@ -100,7 +100,7 @@ class Item {
         }
 
         //calculate the sales tax amount
-        sales_tax_amount = (cost * sales_tax) / 100;
+        sales_tax_amount = ((qty * cost) * sales_tax) / 100;
 
         //round to nearest 0.05
         sales_tax_amount = Math.ceil((sales_tax_amount * 20.00)) / 20.00;
@@ -109,7 +109,7 @@ class Item {
     private void set_total_cost(){
         
         //keep 2 decimal places
-        total_cost = Math.round((cost + imported_tax_amount + sales_tax_amount) * 100) / 100.0;
+        total_cost = Math.round(((qty * cost) + imported_tax_amount + sales_tax_amount) * 100) / 100.0;
     }
 
     public Double get_tax_amount(){

@@ -16,6 +16,7 @@ and is not limited to the 3 test files residing with this app
 */
 
 import java.io.BufferedReader;
+import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
 import java.util.ArrayList;
@@ -29,15 +30,16 @@ public final class App {
         //receipt will hold all baskets created, where each basket represents each txt file
         ArrayList<Basket> receipt = new ArrayList<Basket>();
 
-        //iterate through all txt files that have passed as arguments
-        //all files with extension .txt will be passed using *.txt as the argument
-        for(int i = 0; i < args.length; i++){
+        try{
+            //iterate through all txt files that have passed as arguments
+            //all files with extension .txt will be passed using *.txt as the argument
+            for(int i = 0; i < args.length; i++){
 
-            Basket basket = new Basket();
+                Basket basket = new Basket();
             
-            //read all files
-            BufferedReader reader;
-            try{
+                //read all files
+                BufferedReader reader;
+            
                 
                 //args contain txt file names
                 reader = new BufferedReader(new FileReader(args[i]));
@@ -53,31 +55,30 @@ public final class App {
                     //continue reading each line
                     line = reader.readLine();
                 }
-            } catch(IOException e){
-                e.printStackTrace();
+                //append each basket to receipt list
+                receipt.add(basket);
             }
 
-            //append each basket to receipt list
-            receipt.add(basket);
-        }
-
-        //output all results from receipt
-        for(int i = 0; i < receipt.size(); i++){
+            //output all results from receipt
+            for(int i = 0; i < receipt.size(); i++){
             
-            //retrieve each basket from receipt
-            Basket basket = receipt.get(i);
+                //retrieve each basket from receipt
+                Basket basket = receipt.get(i);
 
-            for(int j = 0; j < basket.size(); j++){
+                for(int j = 0; j < basket.size(); j++){
 
-                //retrieve each item from the basket
-                Item item = basket.get(j);
+                    //retrieve each item from the basket
+                    Item item = basket.get(j);
                 
-                System.out.println(item.get_description());
-            }
+                    System.out.println(item.get_description());
+                }
 
-            //output totals with 2 decimal formatting
-            System.out.println("Sales Taxes: " + String.format("%.02f",basket.get_tax_total()));
-            System.out.println("Total: " + String.format("%.02f",basket.get_grand_total()) + "\n");
+                //output totals with 2 decimal formatting
+                System.out.println("Sales Taxes: " + String.format("%.02f",basket.get_tax_total()));
+                System.out.println("Total: " + String.format("%.02f",basket.get_grand_total()) + "\n");
+            }
+        } catch(IOException e){
+            System.out.println("Error File exception, is file provided?");
         }
     }
 }
